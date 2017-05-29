@@ -1,0 +1,19 @@
+$maincolor: #0691cd;
+@mixin ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@mixin vertical{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+@mixin ellipsisMulti($lineNum:1){
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $lineNum;
+    -webkit-box-orient: vertical;
+}
