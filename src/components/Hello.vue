@@ -1,6 +1,7 @@
 <template>
    <div class="root">
         <div class="validMobile">
+            <div class="title">微联动线上录课系统</div>
             <div class="cell-input">
                 <input class="input-item block icon-mobile" placeholder="手机" v-model="userInfo.mobile">
             </div>
@@ -9,16 +10,16 @@
                 <button class="valid-button" @click="getCode" v-bind:class="{'disabled': buttonStatus}">{{validButtonText}}</button>
             </div>
             <div class="cell-input">
-                <a href="javascript:;" class="confirm-button">登录</a>
+                <a href="javascript:;" class="confirm-button" @click="login">登录</a>
             </div>
         </div>
     </div>
 </template>
-
 <script>
 import {Button, Message} from 'element-ui'
 import Vue from 'vue'
 import base from  '../base'
+import resource from '../resource'
 Vue.component(Button.name, Button)
 export default {
   name: '',
@@ -67,6 +68,25 @@ export default {
       })
 
     },
+    login() {
+      let _this = this
+      if (!base.validate.isTelephone(this.userInfo.mobile)) {
+        Toast({
+          message: '请输入正确的手机号码',
+          duration: 2000
+        })
+        return false
+      }
+      resource.checkMobile({
+        smsCode: this.userInfo.smsCode,
+        mobile: this.userInfo.mobile
+      }).then(res => {
+          if (res.body.code == 0) {
+            this.$router.replace('index')
+          }
+          
+      })
+    }
   }
 }
 </script>
@@ -75,68 +95,61 @@ export default {
 <style scoped lang="scss">
 @import '../styles/app';
 .validMobile {
+    .title {
+        font-size: 30px;
+        color: #000;
+        margin-bottom: 30px;
+    }
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    background: url(../assets/login-background.png) no-repeat;
     background-size: cover;
     @include vertical();
     .mint-cell {
         background: transparent;
     }
     .cell-input {
-        width: 400px;
-        height: 41px;
         position: relative;
         margin-bottom: 20px;
         border-radius: 10px;
-        overflow: hidden;
     }
     .confirm-button {
-        width: 200px;
+        width: 285px;
         height: 32px;
         border-radius: 10px;
-        background: #fff;
-        color: $maincolor;
+        background: $maincolor;
+        color: #fff;
         text-align: center;
         line-height: 32px;
         display: block;
         font-size: 16px;
     }
     .input-item {
-        width: 200px;
-        height: 50px;
-        border: 1px solid #fff;
-        color: #fff;
+        width: 280px;
+        height: 32px;
+        border: 1px solid #e5e5e5;
+        color: #999;
         display: block;
         position: relative;
         box-sizing: border-box;
-        padding-left: 35px;
-        border-radius: 10px;
+        padding-left: 5px;
+        border-radius: 3px;
         font-size: 16px;
         &::-webkit-input-placeholder {
-            color: #fff;
+            color: #999;
         }
-        &.icon-mobile {
-            background: url(../assets/image/icon-login-mobile.png) no-repeat left 10px center;
-            background-size: 17px 26px;
-        }
-        &.icon-code {
-            background: url(../assets/image/icon-login-code.png) no-repeat left 10px center;
-            background-size: 17px 23px;
-        }
+      
     }
     .valid-button {
         position: absolute;
         right: 0;
         top: 0;
-        width: 200px;
+        width: 105px;
         height: 32px;
-        border: 1px solid #fff;
-        color: $maincolor;
-        background: #fff;
+        background: $maincolor;
+        color: #fff;
         outline: none;
         &.disabled {
             border: 1px solid #ccc;

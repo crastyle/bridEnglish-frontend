@@ -1,20 +1,12 @@
 import Vue from 'vue'
-import vueResource from 'vue-resource'
-Vue.use(vueResource)
+import axios from 'axios'
 export default {
-    interceports() {
-        Vue.http.interceptors.push((req, next) => {
-            req.method = "POST"
-            let u = window.localStorage.getItem('userid')
-            let t = window.localStorage.getItem('token')
-           
-        })
-    },
+   
     resource(url, params) {
         let doUrl = 'http://czgy.mbjyy.net/' + url
         // let doUrl = 'http://139.198.11.46:8080/' + url
 
-        return Vue.http.post(doUrl, params)
+        return axios.post(doUrl, params)
     },
 
     getTimestamp() {

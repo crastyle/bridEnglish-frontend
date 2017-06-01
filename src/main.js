@@ -5,11 +5,14 @@ import App from './App'
 import router from './router'
 import "./styles/reset-ui.scss"
 import resource from './resource'
+
 import base from './base'
 import { bus } from './bus'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$static = 'http://localhost:8080/static/'
-resource.interceports()
 new Vue({
   el: '#app',
   router,
